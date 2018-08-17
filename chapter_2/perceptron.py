@@ -23,6 +23,8 @@ class Instance2_1(object):
         self.max_step = max_step
         self.keep_oneline = keep_oneline
         
+        self.epsilon = 1e-8
+        
         self.initialize()
     
     def get_data(self):
@@ -54,8 +56,10 @@ class Instance2_1(object):
         return data, label
         
     def initialize(self):
-        self.w = np.random.randn(1, 2)
-        self.b = np.random.randn()
+#        self.w = np.random.randn(1, 2)
+        self.w = np.zeros((1, 2))
+#        self.b = np.random.randn()
+        self.b = np.zeros((1,))
         
         
     def data_batch(self):
@@ -99,7 +103,7 @@ class Instance2_1(object):
                     self.subfig.lines.pop(1)
                     
                 show_x1 = np.linspace(0, 6, 100)
-                show_x2 = -(self.b + self.w[0, 0]*show_x1) / self.w[0, 1]
+                show_x2 = -(self.b + self.w[0, 0]*show_x1) / (self.w[0, 1] + self.epsilon)
                 
                 self.subfig.plot(show_x1, show_x2, label=str(i))
                 self.subfig.legend(loc='upper left')
